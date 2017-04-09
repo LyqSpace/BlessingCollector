@@ -7,16 +7,16 @@ class UserAuth:
     def __init__(self):
         self._sql_engine = SqlEngine.SqlEngine(database_config)
 
-    def login(self, email, password):
+    def login(self, email, token):
 
-        query_str = 'select * from bless_password where PASSWORD=\'{0}\''.format(password)
+        query_str = 'select * from login_token where TOKEN=\'{0}\''.format(token)
 
         sql_result = self._sql_engine.select_query(query_str)
 
         if len(sql_result) == 0:
             return 'AUTH_FAIL', '口令错误', ''
 
-        query_str = 'select FULLNAME from bless_users where EMAIL=\'{0}\''.format(email)
+        query_str = 'select FULLNAME from users where EMAIL=\'{0}\''.format(email)
 
         sql_result = self._sql_engine.select_query(query_str)
 
@@ -30,12 +30,12 @@ class UserAuth:
     def user_auth(self, cookies, module=None):
 
         email = cookies.get('email')
-        password = cookies.get('password')
+        token = cookies.get('token')
 
-        if email is None or password is None:
+        if email is None or token is None:
             return False
 
-        state = self.login(email, password)
+        state, message, fullname = self.login(email, token)
 
         if state != 'SUCCESS':
             return False

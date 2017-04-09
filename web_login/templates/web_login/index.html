@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    非常严肃的2013复旦浙江群
+{% endblock %}
+{% block page_header %}
+    非常严肃的2013复旦浙江群
+{% endblock %}
+{% block head %}
+    <script type="text/javascript" src="/static/web_login/js/functions.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <br>
+            <div class="panel panel-primary">
+                <div class="panel-heading">登录到收集祝福平台</div>
+                <br>
+                <br>
+                <form class="form-horizontal" onsubmit="return event_login_form(this);">
+                    <div class="form-group">
+                        <label for="email" class="col-md-4 control-label">邮箱</label>
+                        <div class="col-md-6">
+                            <input type="email" class="form-control" id="email" placeholder="请输入邮箱" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="token" class="col-md-4 control-label">口令</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="token" placeholder="请输入口令" required="required">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-6">
+                            <button type="submit" class="btn btn-default">登录</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -24,7 +24,7 @@ class SqlEngine:
             port=3306,
             charset="utf8")
 
-        self._cur = self._conn.cursor(as_dict=True)
+        self._cur = self._conn.cursor(pymysql.cursors.DictCursor)
 
     def select_query(self, sql_str):
         result = None

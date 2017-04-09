@@ -1,6 +1,10 @@
 import configparser
 
 
+def init():
+    print('\nBlessing Collector Set Up Successfully !!!\n')
+
+
 def database_config():
     cp = configparser.ConfigParser()
     cp.read('utility/database.conf')
