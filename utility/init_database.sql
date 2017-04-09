@@ -1,9 +1,9 @@
 use bless;
-drop table users;
-drop table events;
-drop table event_user;
-drop table login_token;
-drop table event_blessings;
+drop table if exists users;
+drop table if exists events;
+drop table if exists event_user;
+drop table if exists login_token;
+drop table if exists event_blessings;
 
 create table users (
     EMAIL varchar(50) not null,
