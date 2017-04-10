@@ -1,6 +1,7 @@
 .idea/
-static/
+collect_static/
 
+*.pyc
 database.conf
 Thumbs.db
 wsgi.py
