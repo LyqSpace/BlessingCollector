@@ -1,4 +1,6 @@
 .idea/
+static/
+
 database.conf
 Thumbs.db
 wsgi.py
