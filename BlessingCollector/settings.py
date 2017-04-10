@@ -26,7 +26,7 @@ SECRET_KEY = 'pt!@e0rcxm7okotyv%*scp(ifh8&&vgvl3d11lpyrdgt#r5kd='
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.157.230.97',
+    'bless.lyq.me',
     'localhost',
     '127.0.0.1',
 ]
