@@ -14,7 +14,7 @@ from utility.functions import init
 
 PROJECT_DIR = dirname(dirname(abspath(__file__)))
 import sys
-sys.path.insert(0,PROJECT_DIR)
+sys.path.extend(PROJECT_DIR)
 
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BlessingCollector.settings")
 os.environ["DJANGO_SETTINGS_MODULE"] = "BlessingCollector.settings"
