@@ -1,8 +1,10 @@
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from utility import UserAuth
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 
+@ensure_csrf_cookie
 def index(request):
 
     template = loader.get_template('web_login/index.html')
@@ -11,6 +13,7 @@ def index(request):
     return HttpResponse(template.render(context))
 
 
+@ensure_csrf_cookie
 def user_login(request):
 
     try:
