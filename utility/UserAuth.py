@@ -14,18 +14,18 @@ class UserAuth:
         sql_result = self._sql_engine.select_query(query_str)
 
         if len(sql_result) == 0:
-            return 'AUTH_FAIL', '口令错误', ''
+            return 'AUTH_FAIL', '口令错误！', ''
 
         query_str = 'select FULLNAME from users where EMAIL=\'{0}\''.format(email)
 
         sql_result = self._sql_engine.select_query(query_str)
 
         if len(sql_result) == 0:
-            return 'AUTH_FAIL', '邮箱不存在', ''
+            return 'AUTH_FAIL', '邮箱不存在！', ''
 
         fullname = sql_result[0]['FULLNAME']
 
-        return 'SUCCESS', '登录成功', fullname
+        return 'SUCCESS', '登录成功！', fullname
 
     def user_auth(self, cookies, module=None):
 
