@@ -1,7 +1,6 @@
 from django.template import loader
 from utility import SqlEngine
 from utility.functions import database_config
-import pandas as pd
 
 
 def new_user_unit():
