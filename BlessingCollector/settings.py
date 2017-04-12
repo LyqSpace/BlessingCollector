@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     'web_home',
     'web_login',
+    'web_user_management',
+    'web_event_management',
 ]
 
 MIDDLEWARE = [

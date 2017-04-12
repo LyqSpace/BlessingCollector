@@ -21,5 +21,6 @@ urlpatterns = [
 
     url(r'', include('web_home.urls')),
     url(r'^login/', include('web_login.urls')),
-
+    url(r'^user_management/', include('web_user_management.urls')),
+    url(r'^event_management/', include('web_event_management.urls')),
 ]

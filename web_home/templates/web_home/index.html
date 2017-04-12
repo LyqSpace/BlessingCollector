@@ -6,8 +6,16 @@
 {% block page_header %}
     收集祝福平台
 {% endblock %}
+{% block head %}
+    <script type="text/javascript" src="/static/web_home/js/functions.js"></script>
+{% endblock %}
 {% block content %}
     <div class="row">
-        主页
+        <div class="col-md-2">
+            <a class="btn btn-default center-block" href="user_management/" target="_blank">用户管理</a>
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-default center-block" href="event_management/" target="_blank">祝福事件管理</a>
+        </div>
     </div>
 {% endblock %}

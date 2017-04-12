@@ -41,7 +41,7 @@ class UserAuth:
             return False
 
         if module == 'SUPER_ADMIN':
-            if email == 'root@lyq.me':
+            if email == 'admin@bless':
                 return True
             else:
                 return False

@@ -1,0 +1,35 @@
+<h5 class="text_underline">用户信息</h5>
+<form class="form-horizontal" id="user_basic_info_form" onsubmit="return event_user_info_form(this);">
+    <div class="form-group">
+        <label class="control-label col-md-1">邮箱</label>
+        <div class="col-md-2">
+            <p class="form-control-static" id="select_email">{{user.EMAIL}}</p>
+        </div>
+        <label class="control-label col-md-1">姓名</label>
+        <div class="col-md-2">
+            <p class="form-control-static">{{user.FULLNAME}}</p>
+        </div>
+        <label class="control-label col-md-1">生日</label>
+        <div class="col-md-2">
+            <p class="form-control-static">{{user.BIRTHDAY}}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-1" for="field">选择字段</label>
+        <div class="col-md-2">
+            <select class="form-control" id="field">
+                <option value="EMAIL">邮箱</option>
+                <option value="FULLNAME">姓名</option>
+                <option value="BIRTHDAY">生日</option>
+            </select>
+        </div>
+        <label class="control-label col-md-1" for="value">新值</label>
+        <div class="col-md-2">
+            <input type="text" class="form-control col-md-2" id="value" required="required">
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-info">保存更新的信息</button>
+    </div>
+</form>
+
