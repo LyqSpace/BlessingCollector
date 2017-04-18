@@ -35,7 +35,7 @@ def create_new_user(request):
     sql_engine = SqlEngine.SqlEngine(database_config)
 
     try:
-        query_str = 'insert into USERS(EMAIL, FULLNAME, BIRTHDAY) ' \
+        query_str = 'insert into users(EMAIL, FULLNAME, BIRTHDAY) ' \
                     'values(\'{0}\', \'{1}\', \'{2}\')'.format(
             request.POST['email'],
             request.POST['fullname'],
