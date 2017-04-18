@@ -16,14 +16,11 @@ create table `events` (
     ID int not null auto_increment,
     DESCRIPTION varchar(100) not null,
     HAPPEN_DATE date not null,
+    TYPE varchar(10) not null,
+    USER1 varchar(50) not null,
+    USER2 varchar(50),
+    USER3 varchar(50),
     primary key (ID)
-);
-
-create table `event_user` (
-    EVENT_ID int not null,
-    EMAIL varchar(50) not null,
-    EDIT_TIME timestamp not null default current_timestamp,
-    primary key (EVENT_ID, EMAIL)
 );
 
 create table `login_token` (

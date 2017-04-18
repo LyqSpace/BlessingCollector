@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+        <h4>添加单个祝福事件</h4>
+        <form class="form-horizontal" onsubmit="return event_add_birthday_form(this);">
+            <div class="form-group">
+                <label class="control-label col-md-1" for="bless_name">祝福名称</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="bless_name" required="required">
+                </div>
+                <label class="control-label col-md-1" for="bless_date">祝福日期</label>
+                <div class="col-md-2">
+                    <input type="date" class="form-control" id="bless_date" required="required">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-default">添加事件</button>
+                </div>
+            </div>
+            <div class="form-group">
+                {% for user in user_list%}
+                    <label class="checkbox-inline">
+                        <input type="checkbox" name="user" value="{{user.EMAIL}}"> {{user.FULLNAME}}
+                    </label>
+                {% if forloop.counter|divisibleby:5 %}
+                </div>
+                <div class="form-group">
+                {% endif %}
+                {% endfor %}
+            </div>
+        </form>
+    </div>
+</div>
