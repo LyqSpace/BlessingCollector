@@ -43,3 +43,21 @@ def add_birthday(request):
     }
 
     return JsonResponse(context)
+
+
+def add_event(request):
+    user_auth = UserAuth.UserAuth()
+    permission = user_auth.user_auth(request.COOKIES, module='SUPER_ADMIN')
+    if permission is False:
+        return HttpResponseRedirect('/login/')
+
+    status, message = EventManagement.add_event(request)
+    content = EventManagement.event_list_unit()
+
+    context = {
+        'status': status,
+        'message': message,
+        'content': content
+    }
+
+    return JsonResponse(context)

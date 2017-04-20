@@ -18,8 +18,8 @@ create table `events` (
     HAPPEN_DATE date not null,
     TYPE varchar(10) not null,
     USER1 varchar(50) not null,
-    USER2 varchar(50),
-    USER3 varchar(50),
+    USER2 varchar(50) not null,
+    USER3 varchar(50) not null,
     primary key (ID)
 );
 

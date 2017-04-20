@@ -24,6 +24,40 @@ function event_add_birthday_form(form_obj) {
     return false;
 }
 
+function event_add_event_form(form_obj) {
+    if ($("#user1").val() == "NULL") {
+        $.alert("用户 1 必选");
+        return false;
+    }
+
+    $.post({
+        url: "add_event/",
+        data: {
+            "DESCRIPTION": $("#description").val(),
+            "HAPPEN_DATE": $("#happen_date").val(),
+            "USER1": $("#user1").val(),
+            "USER2": $("#user2").val(),
+            "USER3": $("#user3").val(),
+            "email": $("#select_email").html()
+        },
+        success: function(ret_data) {
+            if (ret_data["status"] == "AUTH_FAIL") {
+                location.href = '/login/';
+            } else if (ret_data["status"] == "SUCCESS") {
+                $("#div_event_list_unit").html(ret_data["content"]);
+                $.alert("添加单个祝福事件成功！");
+            } else {
+                $.alert(ret_data["message"]);
+            }
+        },
+        error: function(ret_data) {
+            $.alert("添加单个祝福事件失败！");
+        }
+    });
+
+    return false;
+}
+
 function event_select_old_user_form(form_obj) {
     $.get({
         url: "select_old_user/",
