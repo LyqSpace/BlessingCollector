@@ -1,30 +1,29 @@
+{% if event_list%}
 <div class="row">
     <div class="col-md-12">
         <h4>祝福事件</h4>
-        {% if event_list%}
         <table class="table table-bordered table-hover">
             <thead class="bg-primary">
-                <th style="width: 4em;">序号</th>
                 <th style="width: 8em;">日期</th>
                 <th>祝福事件</th>
                 <th style="width: 8em;">相关用户</th>
-                <th style="width: 6em;">祝福数</th>
-                <th style="width: 10em;">操作</th>
+                <th style="width: 25em;">祝福</th>
+                <th style="width: 6em;">操作</th>
             </thead>
             {% for event in event_list %}
             <tbody>
-                <td>{{ forloop.counter }}</td>
                 <td>{{ event.HAPPEN_DATE }}</td>
                 <td>{{ event.DESCRIPTION }}</td>
                 <td>{{ event.USER | safe }}</td>
-                <td>{{ event.BLESSING_COUNT }}</td>
                 <td>
-                    <a class="btn btn-default" href="arrange_blessings/?event_id={{ event.ID }}" target="_blank">整理</a>
-                    <a class="btn btn-danger" onclick="delete_event(this)" id="{{ event.ID}}">删除</a>
+                    <textarea class="form-control" rows="2" placeholder="写下祝福后保存，可随时修改" id="blessing_{{ event.ID }}">{{ event.BLESSING }}</textarea>
+                </td>
+                <td>
+                    <a class="btn btn-default" onclick="save_blessing(this)" id="{{ event.ID }}">保存</a>
                 </td>
             </tbody>
             {% endfor %}
         </table>
-        {% endif %}
     </div>
 </div>
+{% endif %}

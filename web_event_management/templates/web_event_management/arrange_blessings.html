@@ -1,0 +1,8 @@
+<p><u>发生日期</u> {{ HAPPEN_DATE }} </p>
+<p><u>祝福事件</u> {{ DESCRIPTION }}</p>
+<p><u>相关用户</u> {{ USER1 }} &nbsp;&nbsp; {{ USER2 }} &nbsp;&nbsp; {{ USER3 }}</p>
+<p><u>总祝福数</u> {{ BLESSING_COUNT }}</p>
+<br>
+{% for blessing_info in blessings_list %}
+    <p>{{ blessing_info.USER_NAME }}： {{ blessing_info.BLESSING }}</p>
+{% endfor %}

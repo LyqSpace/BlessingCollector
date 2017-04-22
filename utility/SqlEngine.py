@@ -27,13 +27,16 @@ class SqlEngine:
         self._cur = self._conn.cursor(pymysql.cursors.DictCursor)
 
     def select_query(self, sql_str):
-        result = None
         try:
             self._cur.execute(sql_str)
             result = self._cur.fetchall()
+            if len(result) == 0:
+                return []
+            else:
+                return result
         except Exception as e:
             print(e)
-        return result
+            return []
 
     def execute_query(self, sql_str):
         self._cur.execute(sql_str)

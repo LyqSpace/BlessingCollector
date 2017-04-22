@@ -11,7 +11,7 @@ function event_add_birthday_form(form_obj) {
                 location.href = '/login/';
             } else if (ret_data["status"] == "SUCCESS") {
                 $("#div_event_list_unit").html(ret_data["content"]);
-                $.alert("批量添加生日祝福事件成功！");
+                $.alert(ret_data["message"]);
             } else {
                 $.alert(ret_data["message"]);
             }
@@ -45,8 +45,9 @@ function event_add_event_form(form_obj) {
                 location.href = '/login/';
             } else if (ret_data["status"] == "SUCCESS") {
                 $("#div_event_list_unit").html(ret_data["content"]);
-                $.alert("添加单个祝福事件成功！");
+                $.alert(ret_data["message"]);
             } else {
+                $("#div_event_list_unit").html(ret_data["content"]);
                 $.alert(ret_data["message"]);
             }
         },
@@ -58,52 +59,50 @@ function event_add_event_form(form_obj) {
     return false;
 }
 
-function event_select_old_user_form(form_obj) {
-    $.get({
-        url: "select_old_user/",
+function post_delete_event(event_id) {
+    $.post({
+        url: "delete_event/",
         data: {
-            "email": $("#select_user").val(),
+            "EVENT_ID": event_id
         },
         success: function(ret_data) {
             if (ret_data["status"] == "AUTH_FAIL") {
                 location.href = '/login/';
             } else if (ret_data["status"] == "SUCCESS") {
-                $("#user_profile").html(ret_data["user_profile"]);
+                $("#div_event_list_unit").html(ret_data["content"]);
+                $.alert(ret_data["message"]);
             } else {
+                $("#div_event_list_unit").html(ret_data["content"]);
                 $.alert(ret_data["message"]);
             }
         },
         error: function(ret_data) {
-            $.alert("查询用户失败！");
+            $.alert("删除祝福事件失败！");
         }
     });
-
-    return false;
 }
 
-function event_user_info_form(form_obj) {
-    $.post({
-        url: "update_user_info/",
-        data: {
-            "field": $("#field").val(),
-            "value": $("#value").val(),
-            "email": $("#select_email").html()
-        },
-        success: function(ret_data) {
-            if (ret_data["status"] == "AUTH_FAIL") {
-                location.href = '/login/';
-            } else if (ret_data["status"] == "SUCCESS") {
-                $.alert(ret_data["message"]);
-            } else {
-                $.alert(ret_data["message"]);
+function delete_event(event_obj) {
+
+    var event_id = $(event_obj).attr("id");
+
+    $.confirm({
+        title: "删除祝福事件",
+        content: "请确认，删除后将清空所有人对该事件的祝福。",
+        autoClose: "取消|8000",
+        animation: "RotateY",
+        closeAnimation: "RotateX",
+        buttons: {
+            确认删除: {
+                btnClass: "btn-primary",
+                action: function() {
+                    post_delete_event(event_id);
+                }
+            },
+            取消: {
             }
-        },
-        error: function(ret_data) {
-            $.alert("更新用户信息失败！");
         }
     });
-
-    return false;
 }
 
 $(document).ready(function() {

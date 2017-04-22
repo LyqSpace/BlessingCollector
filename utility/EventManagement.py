@@ -39,6 +39,8 @@ def event_list_unit():
         sql_result = sql_engine.select_query(query_str)
         if len(sql_result) > 0:
             user = sql_result[0]['FULLNAME']
+        else:
+            user = '无该用户'
 
         if row['USER2'] != 'NULL':
             query_str = 'select FULLNAME from users where EMAIL=\'{0}\''.format(row['USER2'])
@@ -52,10 +54,19 @@ def event_list_unit():
             if len(sql_result) > 0:
                 user += '<br>' + sql_result[0]['FULLNAME']
 
+        query_str = 'select count(*) as cnt from event_blessings where EVENT_ID=\'{0}\''.format(row['ID'])
+        event_blessings_result = sql_engine.select_query(query_str)
+        try:
+            blessing_count = event_blessings_result[0]['cnt']
+        except Exception:
+            blessing_count = 0
+
         event_info = {
+            'ID': row['ID'],
             'HAPPEN_DATE': str(row['HAPPEN_DATE']),
             'DESCRIPTION': row['DESCRIPTION'],
             'USER': user,
+            'BLESSING_COUNT': blessing_count
         }
 
         event_list.append(event_info)
@@ -71,7 +82,7 @@ def add_birthday(request):
     try:
         year = request.POST['year']
     except KeyError:
-        return 'FAIL', '缺少年份参数！', ''
+        return 'FAIL', '缺少年份参数！'
 
     sql_engine = SqlEngine.SqlEngine(database_config)
     query_str = 'select * from users where BIRTHDAY is not NULL'
@@ -91,15 +102,15 @@ def add_birthday(request):
 
         query_str = 'insert events(DESCRIPTION, HAPPEN_DATE, USER1, USER2, USER3, TYPE) ' \
                     'values(\'生日祝福\', \'{0}\', \'{1}\', \'NULL\', \'NULL\', \'BIRTHDAY\')'.format(
-                        bless_date,
-                        row['EMAIL']
-                    )
+            bless_date,
+            row['EMAIL']
+        )
         try:
             sql_engine.execute_query(query_str)
         except Exception:
             return 'FAIL', '批量添加祝福事件失败！在 {0} 处'.format(row['FULLNAME'])
 
-    return 'SUCCESS', ''
+    return 'SUCCESS', '批量添加生日祝福事件成功！'
 
 
 def add_event(request):
@@ -110,7 +121,7 @@ def add_event(request):
         user2 = request.POST['USER2']
         user3 = request.POST['USER3']
     except KeyError:
-        return 'FAIL', '缺少祝福事件参数！', ''
+        return 'FAIL', '缺少添加祝福事件参数！'
 
     sql_engine = SqlEngine.SqlEngine(database_config)
     query_str = 'insert events(DESCRIPTION, HAPPEN_DATE, TYPE, USER1, USER2, USER3) ' \
@@ -121,6 +132,98 @@ def add_event(request):
     try:
         sql_engine.execute_query(query_str)
     except:
-        return 'FAIL', '批量单个祝福事件失败！'
+        return 'FAIL', '添加单个祝福事件失败！'
 
-    return 'SUCCESS', ''
+    return 'SUCCESS', '添加单个祝福事件成功！'
+
+
+def delete_event(request):
+    try:
+        event_id = request.POST['EVENT_ID']
+    except KeyError:
+        return 'FAIL', '缺少删除祝福事件参数！'
+
+    sql_engine = SqlEngine.SqlEngine(database_config)
+
+    query_str = 'delete from events where events.ID=\'{0}\''.format(event_id)
+    try:
+        sql_engine.execute_query(query_str)
+    except:
+        return 'FAIL', '删除祝福事件失败！'
+
+    return 'SUCCESS', '删除祝福事件成功！'
+
+
+def arrange_blessings(request):
+    try:
+        event_id = request.GET['event_id']
+    except:
+        return '缺少事件 ID 参数！'
+
+    sql_engine = SqlEngine.SqlEngine(database_config)
+
+    query_str = 'select * from events where ID=\'{0}\''.format(event_id)
+    sql_result = sql_engine.select_query(query_str)
+
+    if len(sql_result) == 0:
+        return '查找不到该祝福事件！'
+
+    description = sql_result[0]['DESCRIPTION']
+    happen_date = str(sql_result[0]['HAPPEN_DATE'])
+
+    if sql_result[0]['USER1'] != 'NULL':
+        query_str = 'select * from users where EMAIL=\'{0}\''.format(sql_result[0]['USER1'])
+        user_result = sql_engine.select_query(query_str)
+        user1 = user_result[0]['FULLNAME']
+    else:
+        user1 = ''
+
+    if sql_result[0]['USER2'] != 'NULL':
+        query_str = 'select * from users where EMAIL=\'{0}\''.format(sql_result[0]['USER2'])
+        user_result = sql_engine.select_query(query_str)
+        user2 = user_result[0]['FULLNAME']
+    else:
+        user2 = ''
+
+    if sql_result[0]['USER3'] != 'NULL':
+        query_str = 'select * from users where EMAIL=\'{0}\''.format(sql_result[0]['USER3'])
+        user_result = sql_engine.select_query(query_str)
+        user3 = user_result[0]['FULLNAME']
+    else:
+        user3 = ''
+
+    query_str = 'select * from event_blessings where EVENT_ID=\'{0}\''.format(event_id)
+    sql_result = sql_engine.select_query(query_str)
+
+    blessing_count = len(sql_result)
+
+    blessings_list = []
+    for row in sql_result:
+
+        query_str = 'select * from users where EMAIL=\'{0}\''.format(row['EMAIL'])
+        user_result = sql_engine.select_query(query_str)
+
+        if len(user_result) > 0:
+            user_name =  user_result[0]['FULLNAME']
+        else:
+            user_name = row['EMAIL']
+
+        blessings_info = {
+            'USER_NAME': user_name,
+            'BLESSING': row['MESSAGE']
+        }
+
+        blessings_list.append(blessings_info)
+
+    template = loader.get_template('web_event_management/arrange_blessings.html')
+    context = {
+        'DESCRIPTION': description,
+        'HAPPEN_DATE': happen_date,
+        'USER1': user1,
+        'USER2': user2,
+        'USER3': user3,
+        'BLESSING_COUNT': blessing_count,
+        'blessings_list': blessings_list
+    }
+
+    return template.render(context)

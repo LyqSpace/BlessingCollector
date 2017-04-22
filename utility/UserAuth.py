@@ -9,7 +9,7 @@ class UserAuth:
 
     def login(self, email, token):
 
-        query_str = 'select * from login_token where TOKEN=\'{0}\''.format(token)
+        query_str = 'select * from options where FIELD=\'TOKEN\' and VALUE=\'{0}\''.format(token)
 
         sql_result = self._sql_engine.select_query(query_str)
 

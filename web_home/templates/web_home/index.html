@@ -10,6 +10,7 @@
     <script type="text/javascript" src="/static/web_home/js/functions.js"></script>
 {% endblock %}
 {% block content %}
+    {% if SUPER_ADMIN %}
     <div class="row">
         <div class="col-md-2">
             <a class="btn btn-default center-block" href="user_management/" target="_blank">用户管理</a>
@@ -18,4 +19,10 @@
             <a class="btn btn-default center-block" href="event_management/" target="_blank">祝福事件管理</a>
         </div>
     </div>
+    <hr>
+    {% endif %}
+    <div id="div_event_list_unit">
+        {{ event_list_unit }}
+    </div>
+
 {% endblock %}

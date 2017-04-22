@@ -23,9 +23,10 @@ create table `events` (
     primary key (ID)
 );
 
-create table `login_token` (
-    TOKEN int not null,
-    primary key (TOKEN)
+create table `options` (
+    FIELD varchar(20) not null,
+    VALUE varchar(50) not null,
+    primary key (FIELD)
 );
 
 create table `event_blessings` (
@@ -37,4 +38,4 @@ create table `event_blessings` (
 );
 
 insert into users(EMAIL, FULLNAME) values('admin@bless', '超级管理员');
-insert into login_token(TOKEN) values('2013');
+insert into options(FIELD, VALUE) values('TOKEN', '2013');

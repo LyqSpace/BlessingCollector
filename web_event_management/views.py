@@ -26,6 +26,7 @@ def index(request):
     return HttpResponse(template.render(context))
 
 
+@ensure_csrf_cookie
 def add_birthday(request):
 
     user_auth = UserAuth.UserAuth()
@@ -45,6 +46,7 @@ def add_birthday(request):
     return JsonResponse(context)
 
 
+@ensure_csrf_cookie
 def add_event(request):
     user_auth = UserAuth.UserAuth()
     permission = user_auth.user_auth(request.COOKIES, module='SUPER_ADMIN')
@@ -61,3 +63,33 @@ def add_event(request):
     }
 
     return JsonResponse(context)
+
+
+@ensure_csrf_cookie
+def delete_event(request):
+    user_auth = UserAuth.UserAuth()
+    permission = user_auth.user_auth(request.COOKIES, module='SUPER_ADMIN')
+    if permission is False:
+        return HttpResponseRedirect('/login/')
+
+    status, message = EventManagement.delete_event(request)
+    content = EventManagement.event_list_unit()
+
+    context = {
+        'status': status,
+        'message': message,
+        'content': content
+    }
+
+    return JsonResponse(context)
+
+
+def arrange_blessings(request):
+    user_auth = UserAuth.UserAuth()
+    permission = user_auth.user_auth(request.COOKIES, module='SUPER_ADMIN')
+    if permission is False:
+        return HttpResponseRedirect('/login/')
+
+    blessings_page = EventManagement.arrange_blessings(request)
+
+    return HttpResponse(blessings_page)
