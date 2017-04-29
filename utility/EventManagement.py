@@ -54,7 +54,7 @@ def event_list_unit():
             if len(sql_result) > 0:
                 user += '<br>' + sql_result[0]['FULLNAME']
 
-        query_str = 'select count(*) as cnt from event_blessings where EVENT_ID=\'{0}\''.format(row['ID'])
+        query_str = 'select count(*) as cnt from event_blessings where EVENT_ID=\'{0}\' and MESSAGE != ""'.format(row['ID'])
         event_blessings_result = sql_engine.select_query(query_str)
         try:
             blessing_count = event_blessings_result[0]['cnt']
