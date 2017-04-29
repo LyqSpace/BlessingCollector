@@ -192,7 +192,7 @@ def arrange_blessings(request):
     else:
         user3 = ''
 
-    query_str = 'select * from event_blessings where EVENT_ID=\'{0}\' and MESSAGE != ""'.format(event_id)
+    query_str = 'select * from event_blessings where EVENT_ID=\'{0}\' and MESSAGE != "" order by EDIT_TIME'.format(event_id)
     sql_result = sql_engine.select_query(query_str)
 
     blessing_count = len(sql_result)
