@@ -215,6 +215,11 @@ def arrange_blessings(request):
 
         blessings_list.append(blessings_info)
 
+    query_str = 'select FULLNAME from users where EMAIL not in (' \
+                'select EMAIL from event_blessings where EVENT_ID=\'{0}\' and MESSAGE != "")'.format(
+        event_id)
+    people_not_send_list = sql_engine.select_query(query_str)
+
     template = loader.get_template('web_event_management/arrange_blessings.html')
     context = {
         'DESCRIPTION': description,
@@ -223,7 +228,8 @@ def arrange_blessings(request):
         'USER2': user2,
         'USER3': user3,
         'BLESSING_COUNT': blessing_count,
-        'blessings_list': blessings_list
+        'blessings_list': blessings_list,
+        'people_not_send_list': people_not_send_list
     }
 
     return template.render(context)

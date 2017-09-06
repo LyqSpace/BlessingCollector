@@ -6,3 +6,10 @@
 {% for blessing_info in blessings_list %}
     <p>{{ blessing_info.USER_NAME }}： {{ blessing_info.BLESSING }}</p>
 {% endfor %}
+<br>
+<hr>
+<br>
+<p>{% for person_info in people_not_send_list %}
+    {{ person_info.USER_NAME }}&nbsp;
+{% endfor %}
+</p>
