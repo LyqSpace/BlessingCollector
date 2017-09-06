@@ -216,7 +216,8 @@ def arrange_blessings(request):
         blessings_list.append(blessings_info)
 
     query_str = 'select FULLNAME from users where EMAIL not in (' \
-                'select EMAIL from event_blessings where EVENT_ID=\'{0}\' and MESSAGE != "")'.format(
+                'select EMAIL from event_blessings where EVENT_ID=\'{0}\' and MESSAGE != "")' \
+                'and EMAIL!=\'admin@bless\''.format(
         event_id)
     people_not_send_list = sql_engine.select_query(query_str)
     people_not_send_count = len(people_not_send_list)
