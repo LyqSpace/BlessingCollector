@@ -1,6 +1,7 @@
 .idea/
 collect_static/
 *\_\_pycache\_\_*
+\_\_pycache\_\_/
 
 database.conf
 Thumbs.db
